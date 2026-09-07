@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    container_name: precios_app
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    command: gunicorn --bind 0.0.0.0:5000 --workers 1 --threads 4 --reload app:app

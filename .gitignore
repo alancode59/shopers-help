@@ -1,0 +1,21 @@
+# Entorno virtual / dependencias
+venv/
+__pycache__/
+*.pyc
+
+# Variables de entorno / secretos
+.env
+
+# Fotos de usuario -- no se versionan, son datos, no código
+uploads/*
+procesadas/*
+!uploads/.gitkeep
+!procesadas/.gitkeep
+
+# Editor
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db

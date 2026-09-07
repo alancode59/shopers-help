@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.env
+uploads/*
+procesadas/*
+!uploads/.gitkeep
+!procesadas/.gitkeep
+fotos_procesadas.zip

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precios para fotos de producto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="page">
+        <header class="masthead">
+            <span class="brand__mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 2 3 8v13h18V8z" />
+                    <path d="M9 21v-7h6v7" />
+                </svg>
+            </span>
+            <div>
+                <h1>Precios para fotos de producto</h1>
+                <p>Sube las fotos, define el precio base y descarga todo listo para reenviar.</p>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <aside class="ticket" aria-label="Calculadora de precio">
+                <div class="ticket__hole" aria-hidden="true"></div>
+                <h2 class="ticket__title">Precio sugerido</h2>
+
+                <div class="field">
+                    <label for="precio_base">Precio base</label>
+                    <div class="field__input-wrap">
+                        <span class="field__prefix">$</span>
+                        <input type="number" id="precio_base" placeholder="0.00" step="0.01" inputmode="decimal">
+                    </div>
+                </div>
+
+                <dl class="ticket__breakdown">
+                    <div class="ticket__row">
+                        <dt>Base</dt>
+                        <dd id="base_info">$0</dd>
+                    </div>
+                    <div class="ticket__row">
+                        <dt>Comisión (20%)</dt>
+                        <dd id="comision_info">$0</dd>
+                    </div>
+                    <div class="ticket__row">
+                        <dt>Ganancia y envío (50%)</dt>
+                        <dd id="ganancia_info">$0</dd>
+                    </div>
+                </dl>
+
+                <div class="ticket__divider" aria-hidden="true"></div>
+
+                <div class="ticket__total">
+                    <span>Precio final</span>
+                    <strong id="final_info">$0</strong>
+                </div>
+
+                <button type="button" class="ticket__apply" id="btn-aplicar-todas">
+                    Aplicar a todas las fotos
+                </button>
+            </aside>
+
+            <section class="workbench">
+                <div class="panel upload-panel">
+                    <h2>Subir fotos</h2>
+                    <div class="upload-area" id="drop-zone" style="margin-top: 20px;">
+                        <input type="file" id="file-input" multiple accept=".jpg,.jpeg,.png,.webp" hidden>
+                        <div class="upload-content">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 16V4M12 4 7 9M12 4l5 5" />
+                                <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+                            </svg>
+                            <p class="upload-copy">Arrastra tus fotos aquí o
+                                <button type="button" class="link-button"
+                                    onclick="document.getElementById('file-input').click()">selecciona archivos</button>
+                            </p>
+                            <p class="upload-hint">JPG, PNG o WebP</p>
+                        </div>
+                    </div>
+                    <button class="button button--primary button--block" id="btn-procesar" onclick="procesarFotos()"
+                        disabled>
+                        Procesar fotos
+                    </button>
+                </div>
+
+                <div class="panel results-panel" id="results-section" style="display: none;">
+                    <div class="results-panel__header">
+                        <h2>Fotos procesadas</h2>
+                        <div class="results-panel__actions">
+                            <button class="button button--ghost" onclick="descargarTodas()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3v12M7 10l5 5 5-5" />
+                                    <path d="M4 19h16" />
+                                </svg>
+                                Descargar todo
+                            </button>
+                            <button class="button button--danger-ghost" onclick="limpiarTodo()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 7h16" />
+                                    <path d="M9 7V4h6v3M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13" />
+                                </svg>
+                                Limpiar todo
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="results-panel__summary">Total del lote: <strong id="precio-aplicado">$0</strong></p>
+
+                    <div class="gallery" id="gallery"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="loading" class="loading" style="display: none;">
+        <div class="loading__mark"></div>
+        <p>Procesando fotos…</p>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
