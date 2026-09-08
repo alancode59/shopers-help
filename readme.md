@@ -67,7 +67,6 @@ El `docker-compose.yml` actual ya está configurado para desarrollo:
 - Gunicorn corre con `--reload`: los cambios en `app.py`/`text_overlay.py` reinician el proceso solo.
 - Cambios en `.html`/`.css`/`.js` no necesitan ni reinicio — solo recarga el navegador (Ctrl+Shift+R si el navegador está cacheando agresivo).
 
-**Antes de dejarlo corriendo para uso diario** (no solo mientras programas), conviene volver a una versión sin `--reload` y con más workers — pregúntame si quieres que te arme ese `docker-compose.prod.yml` aparte.
 
 ## Notas técnicas
 
