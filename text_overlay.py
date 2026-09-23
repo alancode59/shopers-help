@@ -1,4 +1,3 @@
-
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -16,7 +15,10 @@ if not RUTA_FUENTE_PRECIO.exists() or not RUTA_FUENTE_MONEDA.exists():
         "(y asegúrate de que el Dockerfile las incluya en el build)."
     )
 
-Posicion = Literal["bottom-right", "bottom-left", "bottom-center"]
+Posicion = Literal[
+    "center", "center-left", "center-right",
+    "bottom-right", "bottom-left", "bottom-center",
+]
 
 
 @lru_cache(maxsize=64)
@@ -61,6 +63,16 @@ def _posicion_caja(
     posicion: Posicion, ancho_img: int, alto_img: int,
     caja_ancho: int, caja_alto: int, margen: int,
 ) -> tuple[int, int]:
+    if posicion in ("center", "center-left", "center-right"):
+        y0 = (alto_img - caja_alto) // 2
+        if posicion == "center-left":
+            x0 = margen
+        elif posicion == "center-right":
+            x0 = ancho_img - caja_ancho - margen
+        else:
+            x0 = (ancho_img - caja_ancho) // 2
+        return x0, y0
+
     if posicion == "bottom-left":
         x0 = margen
     elif posicion == "bottom-center":
@@ -76,9 +88,8 @@ def agregar_precio(
     ruta_salida: str,
     precio: float,
     moneda: str = "MXN",
-    posicion: Posicion = "bottom-right",
+    posicion: Posicion = "center-right",
 ) -> str:
-
     if precio <= 0:
         raise ValueError("El precio debe ser mayor a 0")
 
